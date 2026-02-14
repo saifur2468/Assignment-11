@@ -10,6 +10,9 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+
+
+// MongoDB connection
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.pmmxt7q.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { serverApi: { version: ServerApiVersion.v1 } });
 
@@ -37,7 +40,7 @@ async function run() {
     // =========================
     // GET MY POSTS (BY EMAIL)
     // =========================
-    app.get("/volunter/my-posts", async (req, res) => {
+    app.get("/volunter", async (req, res) => {
       const email = req.query.email;
       if (!email) return res.status(400).send({ message: "Email required" });
 
@@ -91,15 +94,7 @@ async function run() {
 
 run().catch(console.dir);
 
-
-
-
-
-
-
-
-
-
-
-
-
+// Root route to avoid "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("Volunteer Server is running!");
+});
