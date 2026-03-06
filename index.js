@@ -125,7 +125,9 @@ app.get("/posts/top-rated", async (req, res) => {
       const result = await requestsCollection.updateOne({ _id: new ObjectId(id) }, { $set: { status } });
       res.send(result);
     });
-
+app.get("/", (req, res) => {
+  res.send("Server is running!");
+});
     app.listen(port, () => console.log(`Server running on port ${port}`));
   } catch (err) {
     console.error(err);
