@@ -40,6 +40,21 @@ async function run() {
       const posts = await postsCollection.find({}).toArray();
       res.send(posts);
     });
+// Top Rated Posts 
+app.get("/posts/top-rated", async (req, res) => {
+  try {
+    const topPosts = await postsCollection
+      .find({})
+      .sort({ rating: -1 }) 
+      .limit(6)
+      .toArray();
+
+    res.send(topPosts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send({ message: "Failed to fetch top rated posts" });
+  }
+});
 
     // Get My Posts
     app.get("/posts", async (req, res) => {
